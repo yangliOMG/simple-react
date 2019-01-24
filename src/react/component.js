@@ -8,8 +8,8 @@ class Component {
         this.props = props;
     }
 
-    setState( stateChange ) {
-        enqueueSetState( stateChange, this );
+    setState( stateChange, calllback ) {
+        enqueueSetState( stateChange, this, calllback );
     }
 }
 

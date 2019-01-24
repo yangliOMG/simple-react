@@ -4,14 +4,15 @@ const setStateQueue = [];
 const renderQueue = [];
 
 
-export function enqueueSetState( stateChange, component ) {
+export function enqueueSetState( stateChange, component, calllback ) {
     // 如果queue的长度是0，也就是在上次flush执行之后第一次往队列里添加
     if ( setStateQueue.length === 0 ) {
         defer( flush );
     }
     setStateQueue.push( {
         stateChange,
-        component
+        component, 
+        calllback
     } );
     // 如果renderQueue里没有当前组件，则添加到队列中
     if ( !renderQueue.some( item => item === component ) ) {
@@ -24,7 +25,7 @@ function flush() {
     // 遍历
     while( item = setStateQueue.shift() ) {
 
-        const { stateChange, component } = item;
+        const { stateChange, component, calllback } = item;
 
         // 如果没有prevState，则将当前的state作为初始的prevState
         if ( !component.prevState ) {
@@ -40,6 +41,9 @@ function flush() {
         }
 
         component.prevState = component.state;
+        if(calllback){
+            calllback()
+        }
     }
     // 渲染每一个组件
     while( component = renderQueue.shift() ) {

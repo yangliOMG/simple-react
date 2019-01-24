@@ -12,19 +12,23 @@ class Counter extends React.Component {
     }
 
     componentWillUpdate() {
-        console.log( 'update' );
+        // console.log( 'update' );
     }
 
     componentWillMount() {
-        console.log( 'mount' );
-        for (let i = 0; i < 10; i++) {
-            this.setState({num: this.state.num + i});
-        }
-
+        // console.log( 'mount' );
+        // for (let i = 0; i < 10; i++) {
+        //     this.setState({num: this.state.num + i});
+        // }
     }
 
     onClick() {
-        this.setState( { num: this.state.num + 1 } );
+        var start = new Date().getTime()
+        for (let i = 0; i < 1000; i++) {
+            this.setState( { num: this.state.num + 1 } ,()=>console.log('stateSave'));
+        }
+        var end = new Date().getTime()
+        console.log(end-start)
     }
 
     render() {
